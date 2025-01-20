@@ -1,6 +1,6 @@
 const gameContainer = document.getElementById('game-container');
 const donkey = document.getElementById('donkey');
-const grassTexture = 'grass.png'; // Çimen texture dosyasının yolu
+const grassTexture = 'grass.png'; 
 
 let donkeyX = 10;
 let donkeyY = 10;
@@ -8,7 +8,7 @@ let speed = 5;
 
 const butters = [];
 const trees = [];
-let toaster = null;
+let toaster = null;  
 
 let isResetting = false; 
 let collectedAllButters = false; 
@@ -37,19 +37,22 @@ function createToaster() {
     toaster.className = 'toaster';
     toaster.style.left = `${Math.random() * 750}px`;
     toaster.style.top = `${Math.random() * 550}px`;
-    toaster.style.width = '100px';
-    toaster.style.height = 'auto';
-    toaster.innerHTML = `<img src="toaster.png" alt="toaster" style="width: 100%; height: auto;">`;
+    
+    toaster.style.width = '100px';  
+    toaster.style.height = 'auto'; 
+
+    toaster.innerHTML = `<img src="tost.png" alt="toaster" style="width: 100%; height: auto;">`;  
     gameContainer.appendChild(toaster);
 }
 
-generateItems(10, 'butter', 'butter.png', butters);
+generateItems(10, 'butter', 'teremyag.png', butters);
 generateItems(7, 'tree', 'tree.png', trees);
-createToaster();
+createToaster();  
 
 gameContainer.style.backgroundImage = `url(${grassTexture})`;
 gameContainer.style.backgroundSize = '50px 50px'; 
-gameContainer.style.backgroundRepeat = 'repeat';
+gameContainer.style.backgroundRepeat = 'repeat'; 
+
 
 function moveDonkey() {
     if (isResetting) return; 
@@ -180,7 +183,7 @@ function resetGame() {
     trees.forEach((tree) => tree.remove());
     butters.length = 0;
     trees.length = 0;
-    generateItems(10, 'butter', 'butter.png', butters);
+    generateItems(10, 'butter', 'teremyag.png', butters);
     generateItems(7, 'tree', 'tree.png', trees);
     donkey.style.left = `${donkeyX}px`;
     donkey.style.top = `${donkeyY}px`;
