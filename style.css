@@ -1,0 +1,48 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #87ceeb;
+}
+
+#game-container {
+    position: relative;
+    width: 800px;
+    height: 600px;
+    background-color: #228b22;
+    border: 2px solid #000;
+    overflow: hidden;
+}
+
+#donkey {
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    left: 10px;
+    top: 10px;
+}
+
+#toaster {
+    position: absolute;
+    width: 20px;
+    height: 70px;
+    bottom: 20px;
+    right: 20px;
+}
+
+.butter, .tree {
+    position: absolute;
+}
+
+.butter img {
+    width: 50px;
+    height: 50px;
+}
+
+.tree img {
+    width: 50px;
+    height: 50px;
+}
