@@ -8,12 +8,11 @@ let speed = 5;
 
 const butters = [];
 const trees = [];
-let toaster = null;  // Tost makinesi nesnesi
+let toaster = null;
 
-let isResetting = false; // Reset işlemi kontrolü
-let collectedAllButters = false; // Bütün tereyağları toplandı mı?
+let isResetting = false; 
+let collectedAllButters = false; 
 
-// Tuş takibi
 const keys = {
     w: false,
     s: false,
@@ -21,7 +20,6 @@ const keys = {
     d: false,
 };
 
-// Tereyağı ve ağaç ekleme
 function generateItems(count, className, imgSrc, arr) {
     for (let i = 0; i < count; i++) {
         const item = document.createElement('div');
@@ -34,35 +32,27 @@ function generateItems(count, className, imgSrc, arr) {
     }
 }
 
-// Tost makinesi ekleme
 function createToaster() {
     toaster = document.createElement('div');
     toaster.className = 'toaster';
     toaster.style.left = `${Math.random() * 750}px`;
     toaster.style.top = `${Math.random() * 550}px`;
-    
-    // Tost makinesinin boyutunu sınırlayalım
-    toaster.style.width = '100px';  // Genişlik
-    toaster.style.height = 'auto';  // Yükseklik oranı korunarak ayarlanacak
-
-    toaster.innerHTML = `<img src="tost.png" alt="toaster" style="width: 100%; height: auto;">`;  // Resim boyutunu da kontrol ediyoruz
+    toaster.style.width = '100px';
+    toaster.style.height = 'auto';
+    toaster.innerHTML = `<img src="toaster.png" alt="toaster" style="width: 100%; height: auto;">`;
     gameContainer.appendChild(toaster);
 }
 
-// Başlangıçta tereyağı ve ağaç ekleyelim
-generateItems(10, 'butter', 'teremyag.png', butters);
+generateItems(10, 'butter', 'butter.png', butters);
 generateItems(7, 'tree', 'tree.png', trees);
-createToaster();  // Tost makinesini oluştur
+createToaster();
 
-// Çimen texture ekleme
 gameContainer.style.backgroundImage = `url(${grassTexture})`;
-gameContainer.style.backgroundSize = '50px 50px'; // Tekrarlanan doku boyutu
-gameContainer.style.backgroundRepeat = 'repeat'; // Doku tekrarı
+gameContainer.style.backgroundSize = '50px 50px'; 
+gameContainer.style.backgroundRepeat = 'repeat';
 
-
-// Hareketi sürekli kontrol et
 function moveDonkey() {
-    if (isResetting) return; // Reset işlemi yapılıyorsa hareket etme
+    if (isResetting) return; 
 
     if (keys.w) donkeyY = Math.max(0, donkeyY - speed);
     if (keys.s) donkeyY = Math.min(550, donkeyY + speed);
@@ -77,7 +67,6 @@ function moveDonkey() {
     checkToasterCollision();
 }
 
-// Hitbox kontrolünü küçük yapalım
 function checkCollision(rect1, rect2, scale = 1) {
     const scaledRect1 = {
         x: rect1.x + rect1.width * (1 - scale) / 2,
@@ -106,7 +95,6 @@ function checkButterCollision() {
         const rect1 = donkey.getBoundingClientRect();
         const rect2 = butter.getBoundingClientRect();
 
-        // Hitbox'ı küçültüyoruz (tereyağı için 0.5, yani %50)
         if (checkCollision(rect1, rect2, 0.5)) {
             butter.remove();
             butters.splice(index, 1);
@@ -123,7 +111,6 @@ function checkTreeCollision() {
         const rect1 = donkey.getBoundingClientRect();
         const rect2 = tree.getBoundingClientRect();
 
-        // Hitbox'ı küçültüyoruz (ağaç için 0.6, yani %60)
         if (checkCollision(rect1, rect2, 0.6)) {
             showVideoAndReset();
         }
@@ -131,27 +118,24 @@ function checkTreeCollision() {
 }
 
 function checkToasterCollision() {
-    if (!collectedAllButters) return; // Eğer tereyağları toplanmadıysa tost makinesiyle çarpışma olmasın
+    if (!collectedAllButters) return; 
 
     const rect1 = donkey.getBoundingClientRect();
     const rect2 = toaster.getBoundingClientRect();
 
-    // Hitbox'ı küçültüyoruz (tost makinesi için 0.7, yani %70)
     if (checkCollision(rect1, rect2, 0.7)) {
         showFinalVideo();
     }
 }
 
-// Video oynat ve oyunu sıfırla
 function showVideoAndReset() {
-    isResetting = true; // Reset işlemi başladı
+    isResetting = true; 
 
-    // Video elementi oluştur
     const video = document.createElement('video');
     video.src = 'enesbatur.mp4';
     video.autoplay = true;
     video.controls = false;
-    video.muted = false; // Ses açıldı
+    video.muted = false; 
     video.style.position = 'absolute';
     video.style.width = '100%';
     video.style.height = '100%';
@@ -159,24 +143,21 @@ function showVideoAndReset() {
     video.style.left = '0';
     gameContainer.appendChild(video);
 
-    // 2 saniye sonra oyunu sıfırla
     setTimeout(() => {
         video.remove();
         resetGame();
-        isResetting = false; // Reset işlemi bitti
+        isResetting = false; 
     }, 2000);
 }
 
-// Final videosunu oynat ve oyunu bitir
 function showFinalVideo() {
     isResetting = true;
 
-    // Final video elementi oluştur
     const video = document.createElement('video');
     video.src = 'essex.mp4';
     video.autoplay = true;
     video.controls = false;
-    video.muted = false; // Ses açıldı
+    video.muted = false; 
     video.style.position = 'absolute';
     video.style.width = '100%';
     video.style.height = '100%';
@@ -184,16 +165,14 @@ function showFinalVideo() {
     video.style.left = '0';
     gameContainer.appendChild(video);
 
-    // 5 saniye sonra oyunu sıfırla
     setTimeout(() => {
         video.remove();
         alert('BRAVO KORNACI!!');
         resetGame();
-        isResetting = false; // Oyun bitişi
+        isResetting = false; 
     }, 5000);
 }
 
-// Oyunu sıfırla
 function resetGame() {
     donkeyX = 10;
     donkeyY = 10;
@@ -201,15 +180,13 @@ function resetGame() {
     trees.forEach((tree) => tree.remove());
     butters.length = 0;
     trees.length = 0;
-   // createToaster();  // Tost makinesini tekrar oluştur
-    generateItems(10, 'butter', 'teremyag.png', butters);
+    generateItems(10, 'butter', 'butter.png', butters);
     generateItems(7, 'tree', 'tree.png', trees);
     donkey.style.left = `${donkeyX}px`;
     donkey.style.top = `${donkeyY}px`;
     collectedAllButters = false;
 }
 
-// Tuş takibi için event listeners
 document.addEventListener('keydown', (e) => {
     if (e.key in keys) keys[e.key] = true;
 });
@@ -218,5 +195,4 @@ document.addEventListener('keyup', (e) => {
     if (e.key in keys) keys[e.key] = false;
 });
 
-// Ana döngü
 setInterval(moveDonkey, 20);
